@@ -1,46 +1,47 @@
-#include <stdio.h>
-long long fact(int num);
-void printStrongNumbers(int start, int end);
+ #include <stdio.h>
+#include <math.h>
 
+int isArmstrong(int num);
+void printArmstrong(int start, int end);
 
-int main()
-{
+int main() {
     int start, end;
-    printf("Enter the lower limit to find strong number: ");
-    scanf("%d", &start);
-    printf("Enter the upper limit to find strong number: ");
-    scanf("%d", &end);
-    printf("All strong numbers between %d to %d are: \n", start, end);
-    printStrongNumbers(start, end);
-    
+
+    printf("Enter start and end of interval: ");
+    scanf("%d %d", &start, &end);
+
+    printf("Armstrong numbers between %d and %d are:\n", start, end);
+    printArmstrong(start, end);
+
     return 0;
 }
-void printStrongNumbers(int start, int end)
-{
-    long long sum;
-    int num;
-    while(start != end)
-    {
-        sum = 0;
-        num = start;
-        while(num != 0)
-        {
-            sum += fact(num % 10);
-            num /= 10; 
-        }
-        if(start == sum)
-        {
-            printf("%d, ", start);
-        }
-        
-        start++;
+
+int isArmstrong(int num) {
+    int digit, sum = 0, temp = num, n = 0;
+
+    while (temp > 0) {
+        temp /= 10;
+        n++;
     }
+
+    temp = num;
+
+    while (temp > 0) {
+        digit = temp % 10;
+        sum += pow(digit, n);
+        temp /= 10;
+    }
+
+    return (sum == num);
 }
-long long fact(int num)
-{
-    if(num == 0)
-        return 1;
-    else
-        return (num * fact(num-1));
+
+void printArmstrong(int start, int end) {
+    int i;
+
+    for (i = start; i <= end; i++) {
+        if (isArmstrong(i)) {
+            printf("%d\n", i);
+        }
+    }
 }
 
